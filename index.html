@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>මගේ හදවතේ මල් පෙති</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --theme-text: #ffffff;
+      --theme-accent: #f0f0f0;
+    }
+
+    .font-sinhala {
+      font-family: 'Noto Sans Sinhala', sans-serif;
+      line-height: 1.8;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .dynamic-overlay {
+      background: linear-gradient(
+              45deg,
+              rgba(0, 0, 0, 0.7) 0%,
+              rgba(0, 0, 0, 0.4) 50%,
+              rgba(0, 0, 0, 0.7) 100%
+      );
+    }
+
+    .poem-card {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--theme-accent);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .theme-text {
+      color: var(--theme-text) !important;
+    }
+
+    .theme-accent {
+      color: var(--theme-accent) !important;
+    }
+
+    .poem-card {
+        min-height: 60vh;
+        max-height: 80vh;
+        overflow-y: auto;
+        transition: font-size 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .poem-card {
+            width: 90%;
+            margin: 0 auto !important;
+            min-height: 70vh;
+        }
+
+        .poem-card p {
+            font-size: 1.2rem !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .poem-card {
+            padding: 1.5rem !important;
+            min-height: 70vh;
+            max-height: 100vh;
+        }
+
+        .poem-card p {
+            font-size: 1rem !important;
+            line-height: 1.4 !important;
+        }
+
+        .poem-card div {
+            font-size: 2rem !important;
+        }
+    }
+  </style>
+</head>
+<body class="overflow-y-scroll overflow-x-hidden h-screen snap-y snap-mandatory bg-gray-900">
+
+<!-- Progress Indicator -->
+<div class="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden md:block">
+  <div class="h-64 w-1 bg-gray-300/20 rounded-full">
+    <div id="progress" class="w-1 bg-gray-100 rounded-full transition-all duration-500"></div>
+  </div>
+</div>
+
+<!-- Cover Section -->
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="img.png">
+  <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+  <div class=" dynamic-overlay absolute inset-0"></div>
+  <div class="container mx-auto h-full flex items-center justify-center px-4 relative z-10">
+    <div class="text-center">
+      <h1 class="text-6xl md:text-8xl font-sinhala text-violet-400 mb-6 opacity-0" id="mainTitle">
+        උදේ පිපුණු කවි මල්
+      </h1>
+      <div class="w-48 h-1 theme-accent bg-current mx-auto mb-8 rounded-full opacity-0" id="titleLine"></div>
+      <p class="text-violet-300 font-sinhala text-xl opacity-0" id="subTitle">
+        ඔබ දෙස බැලීමෙන් මල් පිපෙන හදවත...
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Poem Sections -->
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="3.png">
+  <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+  <div class="dynamic-overlay absolute inset-0"></div>
+  <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+    <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+      <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+        සතුටින් පිරී ඉතිරෙන්න
+      </div>
+      <p class="font-sinhala text-2xl leading-relaxed text-right">
+        සුළඟේ නටන පෙති මෙන් <br>
+        නුඹේ සිහින දිලිසෙන්න <br>
+        මල් සුවඳින් පිරි උයනේ <br>
+        නුඹේ සිත පිබිදෙන්න<br> <br>
+
+        තරු එළියෙන් දිදුලන රෑ <br>
+        නුඹේ මග එළි කරන්න <br>
+        ජීවිතයේ සෑම දිනක <br>
+        සතුටින් පිරී ඉතිරෙන්න <br>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="4.png">
+  <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+  <div class="dynamic-overlay absolute inset-0"></div>
+  <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+    <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+      <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+        සෑම මොහොතක්ම සුන්දර මතකයක්
+      </div>
+      <p class="font-sinhala text-2xl leading-relaxed text-left">
+        සඳ එළියේ රිදී පාට<br>
+        නුඹේ මුහුණේ විහිදෙන්න<br>
+        දිය බිඳු මත පායන හිරු සේ<br>
+        නුඹේ සිනා දිලිසෙන්න<br>
+<br>
+        සුළං රැල්ලේ නටන කොළ සේ<br>
+        නුඹේ සිතුවිලි නටන්න<br>
+        ජීවිතයේ සෑම මොහොතක<br>
+        සුන්දර මතක පුරවන්න<br>
+
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="5.png">
+  <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+  <div class="dynamic-overlay absolute inset-0"></div>
+  <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+    <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+      <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+        වැසි සමයේ සිනහව
+      </div>
+      <p class="font-sinhala text-2xl leading-relaxed text-right">
+        වැහි බිඳු අතර නුඹ සිටිනා<br>
+        කුඩය අතින් දරාගෙන<br>
+        සිනාවක් පිපී මුව කොනේ<br>
+        මල් පෙති වගේ විකසෙන<br>
+<br>
+        වැස්සත් එක්ක සෙල්ලම් කරන<br>
+        සුරංගනාවක් වගේ නුඹ<br>
+        කොපුලු දිගේ දිය බිඳු ගලන<br>
+        චිත්‍රයක් වගේ ලස්සන<br>
+<br>
+        වැහි දිනයක නුඹේ සිනාව<br>
+        හිරු එළිය වගේ දිලිසෙන<br>
+        සිහින් වැස්සේ නුඹ නටනා<br>
+        සඳ එළියේ මතකයක් වගේ<br>
+
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="6.png">
+  <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+  <div class="dynamic-overlay absolute inset-0"></div>
+  <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+    <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+      <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+        නොකී ආදරේ
+      </div>
+      <p class="font-sinhala text-2xl leading-relaxed text-left">
+        නුඹ ගැන සිතා මම දුක් වුනත්<br>
+        මගේ ලෝකේ නුඹ නැතත්<br>
+        හදවතේ රිදුම් දැනුනත්<br>
+        නුඹට මම කිසිත් නොවෙමි<br>
+<br>
+        වැහි බිඳු වගේ ඇස් වලින්<br>
+        කඳුළු බිඳු සැලෙන විට<br>
+        නුඹේ සිනහව වෙන කෙනෙකුට<br>
+        මගේ හිත තනිවී යන්නේ<br>
+<br>
+        මගේ ආදරේ නොදැන නුඹ<br>
+        වෙන මගක යන්නේ නම්<br>
+        මගේ හදවත රිදෙන්න දී<br>
+        සතුටින් යන්න සුබ පැතුම්<br>
+
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="7.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+                දුඹුරු දෑස් සොදුරිය
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-right">
+                දෙනෙත් කහ දුඹුරු පාටින්<br>
+                මගේ සිත මවිත කරන<br>
+                සඳ එළියේ දිලිසෙනා<br>
+                දෑස් දෙක නුඹේ ලස්සන<br>
+<br>
+                මී පැණි වගේ දෑස් දෙක<br>
+                සියුම්ව හිරු එළි විහිදෙන<br>
+                සිනාවෙන් දිලිසෙන විට<br>
+                මගේ ලෝකය එළි කරන<br>
+<br>
+                දුඹුරු පැහැති දෑස් දෙකේ<br>
+                ගැඹුරු අරුත් සැඟවිලා<br>
+                නුඹේ හදවත කියවන්න<br>
+                මට පුළුවන් ඒ දෑසින් බලලා<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="8.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+                සිනමා සිහිනය
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-left">
+                තනි තරුවක් පායන රැයේ<br>
+                නුඹ පෙනුනා දුරකදී<br>
+                වැහි බිඳු මත දිලිසෙන විට<br>
+                හිරු එළිය සේ බැබළෙන දී<br>
+<br>
+                සුළඟේ නටන සේද සළුව<br>
+                පා පියවර මද සලනා<br>
+                දුඹුරු දෑසින් මා දෙස බලා<br>
+                මඳ සිනාවක් පා යනා<br>
+<br>
+                වීදි ලාම්පු එළි වැටෙද්දී<br>
+                ඔබේ ඡායා සිලුවෙට<br>
+                මතක සටහන් එකතු කරමි<br>
+                චිත්‍රපටයක් ලෙස හිතට<br>
+<br>
+                සිහින් වැස්සයි, මද සුළඟයි<br>
+                පසුබිම් සංගීතයයි<br>
+                නුඹ යන මග දෙපස රඟන<br>
+                සුරංගනා කතාවකයි<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="9.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+                නොකී ප්‍රේමයේ සමුගැනීම
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-right">
+                මගේ හිතේ පිපුණු මලක්<br>
+                නුඹ වෙනුවෙන් පරවී ගියා<br>
+                කියන්නට බැරි වුණු ප්‍රේමය<br>
+                හදවත තුළ සැඟවී ගියා<br>
+<br>
+                වෙන කෙනෙකුගේ අතක් අල්ලා<br>
+                නුඹ යනවා දුර මගක<br>
+                මගේ දෑසේ කඳුළු බිඳු<br>
+                හදවතට වැටෙනවා රහසේ<br>
+<br>
+                සතුටින් ඉන්න නුඹේ මග<br>
+                මම බලන් ඉන්නම් දුරක<br>
+                නොකී ආදර කතාවක්<br>
+                හිතේ තැන්පත් කරගෙන<br>
+<br>
+                මතක අතරේ සැඟවුණු<br>
+                නුඹේ සිනහව රැක ගන්නම්<br>
+                ජීවිතේ ඉදිරියට යන්න<br>
+                මේ ආදරේ අත හරින්නම්<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="10.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+                නිහඬ හදවතක සටහන්
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-left">
+                නුඹේ හිත තවම කියනවා<br>
+                ඔහු ගැන මතක සුසුම්<br>
+                මම දන්නවා ඒ වේදනාව<br>
+                නුඹට දැනෙනා හුදකලාව<br>
+<br>
+                කිසිම වරදක් නැතිව නුඹව<br>
+                ඔහු අතහැර ගිය දවසේ<br>
+                නුඹේ දෑසේ කඳුළු දැක්කා<br>
+                මගේ හිතත් රිදුනා නිහඬේ<br>
+<br>
+                මගේ ආදරේ සඟවගෙන<br>
+                නුඹේ දුක දෙස බලාගෙන<br>
+                ළඟින් ඉන්නවා නිහඬව<br>
+                හිත රිදෙනවා හොරෙන් හොරෙන්<br>
+<br>
+                සුව වේවි කල් යන විට<br>
+                නුඹේ හදවත් තුවාලේ<br>
+                මම ඉන්නෙමි බලාගෙන<br>
+                නුඹේ සිනහව ආ දවසේ<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="11.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+                නොපැහැදිලි සලකුණු
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-right">
+                මට තේරෙනවා නුඹ හිතින්<br>
+                මගෙන් ඈත් වෙන්න හදනවා<br>
+                එත් සමහර වෙලාවට නුඹ<br>
+                මගේ හැඟීම් හඳුනනවා<br>
+<br>
+                උදාසීන වෙන්න හැදුවත්<br>
+                නුඹේ දෑසේ කියවෙනවා<br>
+                මගේ හැඟීම් දන්නා බව<br>
+                මගේ ආදරේ දකිනවා<br>
+<br>
+                දුරස් වෙන්න හදන තරමට<br>
+                ළං වෙනවා මගේ හිතට<br>
+                නොකී කතා රැසක් අතර<br>
+                අපි දෙන්නා පැටලෙනවා<br>
+<br>
+                මේ නිහඬ ප්‍රේම කතාවේ<br>
+                අවසානය කුමක් වෙයිද<br>
+                මම තාමත් බලා ඉන්නෙමි<br>
+                නුඹේ සිතෙන් පිළිතුරක්<br>
+
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="12.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+                වැසි දිනයක සිහිනය
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-left">
+                අඳුරු වලා අතර සැඟවී<br>
+                හිරු එළිය බැබළෙනවා<br>
+                නුඹේ මුහුණේ සිනහවක් සේ<br>
+                මඳ එළියක් විහිදෙනවා<br>
+<br>
+                සිතුවිලි නුඹේ ගලා යන්නේ<br>
+                වැහි දිය සමග දුරට<br>
+                මතක සුවඳ මිශ්‍ර වෙනවා<br>
+                වැහි බිඳු සමග හිතට<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="13.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+                නිහඬ හද ගීතය
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-right">
+                මල් පෙති අතර සඟවා ගත්<br>
+                සමනලයෙක් මෙන් මම<br>
+                නුඹේ අසල නිහඬව ඉඳන්<br>
+                සිනහව දෙස බලාගෙන<br>
+<br>
+                දිය බිඳක් සේ වැටෙන විට<br>
+                මල් පෙති මත තැන්පත් වී<br>
+                මගේ හැඟුමත් එලෙසින්ම<br>
+                නුඹ වෙත ගලා එන්න සිතයි<br>
+<br>
+                තරු අතරේ සඟවා ගත්<br>
+                සඳ පායන තුරු බලන් ඉන්නා සේ<br>
+                නුඹේ හිතත් විවර වන තුරු<br>
+                මම බලා සිටිමි නිහඬව<br>
+<br>
+                එහෙත් අද මම කියන්නෙමි<br>
+                මේ හදවතේ රහස් කතා<br>
+                නුඹව මගෙන් දුරස් වුවත්<br>
+                එය හෙළි නොකර බැරිය තවත්<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="14.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+                දම් පැහැති සිහිනය
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-left">
+                කොළ පැහැති උයන් මැද<br>
+                දම් පාට සරුවක් හැද<br>
+                නුඹ සිටින රූ සුන්දර<br>
+                චිත්‍රයක් වගේ පහන්<br>
+<br>
+                සුළඟේ නටන සළුව<br>
+                හරිත තුරු අතර නැමී<br>
+                දම් පැහැ විහිදෙන විට<br>
+                සඳ එළියක් සේ දිලිසී<br>
+<br>
+                උයන් මල් අතර නුඹේ<br>
+                සිනහව පිපී යන විට<br>
+                කොළ පාට පසුබිම මත<br>
+                දම් පැහැය මවයි සිතට<br>
+<br>
+                මල් සුවඳින් පිරි උයනේ<br>
+                නුඹේ රූව සැරසිලා<br>
+                සිහින් සුළඟේ පා සටහන්<br>
+                තබමින් යනවා මැවිලා<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="1.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl ml-auto poem-card opacity-0 p-8 rounded-xl theme-text right-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-right theme-accent">
+                දැවෙන්න එපා, නිවෙන්න
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-right">
+                දැවෙන විහගුන්<br>
+                ක්ෂිතිජය පුරා පියාඹා යන විට<br>
+                දැවෙන මා ඈත සිට එදෙස බලමින්,<br>
+                ශීත සෘතුවේ ගිමන් හරිමි<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="h-screen w-screen snap-start relative overflow-hidden" data-bg-image="2.png">
+    <div class="absolute inset-0 bg-cover bg-center scale-110"></div>
+    <div class="dynamic-overlay absolute inset-0"></div>
+    <div class="container mx-auto h-full flex items-center px-4 relative z-10">
+        <div class="max-w-2xl mr-auto poem-card opacity-0 p-8 rounded-xl theme-text left-16 relative">
+            <div class="font-sinhala text-4xl mb-8 text-left theme-accent">
+                මතක සුවඳ
+            </div>
+            <p class="font-sinhala text-2xl leading-relaxed text-left">
+                දවාලන නෙක රක්ත මල් පෙති<br>
+                පියඔාවිත් වැටෙන ගංබඩ<br>
+                ඇයත්, ඇයගේ දැවෙන චිතකය<br>
+                දෙස බලගෙන දැවී අළු වී මතක අතරම<br>
+<br>
+                සිනා මුසු කඳුළු සහිත<br>
+                මතක පුරවා යන්නේ<br>
+                ජීවිතේ දිළිසෙන එක්<br>
+                සුන්දර මුහුණුවරක්<br>
+            </p>
+        </div>
+    </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+      // ========== Dynamic Font Sizing ==========
+      const adjustPoemFontSize = (poemCard) => {
+          const poemContent = poemCard.querySelector('p');
+          const container = poemCard;
+
+          // Reset to base font size
+          const baseSize = window.innerWidth > 768 ? 1.3 : 1.2; // Base font size in rem
+          poemContent.style.fontSize = `${baseSize}rem`;
+          poemContent.style.lineHeight = '1.8';
+
+          // Calculate available space considering padding
+          const styles = window.getComputedStyle(container);
+          const paddingVertical = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+          const availableHeight = container.clientHeight - paddingVertical;
+
+          // Calculate content height
+          const contentHeight = poemContent.scrollHeight;
+
+          // Adjust font size if content overflows
+          if (contentHeight > availableHeight) {
+              const overflowRatio = availableHeight / contentHeight;
+              const newSize = Math.max(baseSize * overflowRatio * 0.9, 0.8); // Minimum 0.8rem
+
+              poemContent.style.fontSize = `${newSize}rem`;
+              poemContent.style.lineHeight = `${1.8 * overflowRatio}rem`;
+          }
+
+          // Additional adjustment for very long poems
+          const lineCount = poemContent.innerHTML.split('<br>').length;
+          if(lineCount > 20) {
+              poemContent.style.fontSize = `${Math.max(parseFloat(poemContent.style.fontSize) * 0.9, 0.7)}rem`;
+          }
+      };
+
+      // ========== Poem Card Layout Adjustment ==========
+      const handlePoemLayout = () => {
+          document.querySelectorAll('.poem-card').forEach(card => {
+              const container = card.closest('.container');
+              const alignment = card.classList.contains('ml-auto') ? 'right' : 'left';
+
+              // Reset positioning
+              card.style.marginLeft = '';
+              card.style.marginRight = '';
+
+              if(window.innerWidth > 768) {
+                  card.style[alignment === 'right' ? 'marginRight' : 'marginLeft'] = '4rem';
+              }
+
+              adjustPoemFontSize(card);
+          });
+      };
+
+      // Initialize layout adjustments
+      handlePoemLayout();
+
+      // ========== Scroll Trigger Animations ==========
+      gsap.utils.toArray(".poem-card").forEach(card => {
+          gsap.fromTo(card,
+              { opacity: 0, y: 100 },
+              {
+                  opacity: 1,
+                  y: 0,
+                  duration: 1.5,
+                  scrollTrigger: {
+                      trigger: card,
+                      start: "top center+=100",
+                      toggleActions: "play none none reverse",
+                      onEnter: () => {
+                          adjustPoemFontSize(card);
+                          handlePoemLayout();
+                      }
+                  }
+              }
+          );
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+          handlePoemLayout();
+          ScrollTrigger.refresh();
+      });
+
+    // ========== Advanced Color Calculation ==========
+    const getContrastColor = (rgb) => {
+      // Calculate luminance
+      const [r, g, b] = rgb.map(c => c / 255);
+      const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+      // Return light or dark text color with hue preservation
+      const hue = Math.round(Math.atan2(Math.sqrt(3)*(g - b), 2*r - g - b) * 180/Math.PI + 360) % 360;
+      const saturation = 70; // Fixed saturation for consistency
+      const lightness = luminance > 0.4 ? 20 : 90; // Dynamic lightness based on background
+
+      return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    };
+
+    const getAccentColor = (rgb) => {
+      const hue = Math.round(Math.atan2(Math.sqrt(3)*(rgb[1] - rgb[2]), 2*rgb[0] - rgb[1] - rgb[2]) * 180/Math.PI + 360) % 360;
+      return `hsl(${hue}, 70%, 70%)`;
+    };
+
+    document.querySelectorAll('[data-bg-image]').forEach(section => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = section.dataset.bgImage;
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 100, 100);
+
+        const data = ctx.getImageData(0, 0, 100, 100).data;
+        const colors = [];
+
+        for(let i = 0; i < data.length; i += 16) {
+          colors.push([data[i], data[i+1], data[i+2]]);
+        }
+
+        // Find dominant color
+        const colorCounts = colors.reduce((acc, [r, g, b]) => {
+          const key = `${r},${g},${b}`;
+          acc[key] = (acc[key] || 0) + 1;
+          return acc;
+        }, {});
+
+        const dominantRGB = Object.entries(colorCounts)
+                .sort((a, b) => b[1] - a[1])[0][0]
+                .split(',').map(Number);
+
+        // Set colors
+        section.style.setProperty('--theme-text', getContrastColor(dominantRGB));
+        section.style.setProperty('--theme-accent', getAccentColor(dominantRGB));
+        section.querySelector('.absolute.inset-0').style.backgroundImage = `url('${img.src}')`;
+      };
+    });
+
+    // ========== Scroll Effects & Animations ==========
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // Title Animation
+    gsap.to(["#mainTitle", "#titleLine", "#subTitle"], {
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      stagger: 0.3,
+      ease: "power4.out"
+    });
+
+    // Poem Card Animations
+    gsap.utils.toArray(".poem-card").forEach(card => {
+      gsap.fromTo(card,
+              { opacity: 0, y: 100 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top center+=100",
+                  toggleActions: "play none none reverse"
+                }
+              }
+      );
+    });
+
+    // Parallax Backgrounds
+    gsap.utils.toArray("section").forEach(section => {
+      const bg = section.querySelector('.absolute.inset-0:first-child');
+      gsap.fromTo(bg,
+              { scale: 1.15 },
+              {
+                scale: 1,
+                scrollTrigger: {
+                  trigger: section,
+                  scrub: true,
+                  start: "top bottom",
+                  end: "bottom top"
+                }
+              }
+      );
+    });
+
+    // Scroll Snapping & Progress
+    const sections = gsap.utils.toArray("section");
+    ScrollTrigger.create({
+      snap: {
+        snapTo: 1 / (sections.length - 1),
+        duration: 1.2,
+        ease: "power2.inOut"
+      },
+      onUpdate: self => {
+        gsap.to("#progress", {
+          height: `${self.progress * 100}%`,
+          duration: 0.3
+        });
+      }
+    });
+
+    // Smooth Scroll Control
+    document.addEventListener("wheel", e => {
+      if(Math.abs(e.deltaY) < 30) return;
+      e.preventDefault();
+
+      const currentIndex = sections.findIndex(s => ScrollTrigger.isInViewport(s, 0.5));
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const target = sections[Math.min(Math.max(currentIndex + dir, 0), sections.length - 1)];
+
+      gsap.to(window, {
+        scrollTo: { y: target, autoKill: false },
+        duration: 1.2,
+        ease: "power2.inOut"
+      });
+    }, { passive: false });
+  });
+</script>
+</body>
+</html>
